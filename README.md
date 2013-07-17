@@ -8,4 +8,5 @@ This is just a simple application with no security implemented, because it seeme
 There is no login system, but you can easily add one, or just simply force a .htaccess login
 
 You can check it out here : http://easy-development.com/client_management/index.php
+
 Yes, I know it's vulnerable to XSS.
