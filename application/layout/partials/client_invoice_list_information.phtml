@@ -1,0 +1,49 @@
+<?php if(isset($client_id) || isset($invoice_list)) : ?>
+  <?php $invoice_list = isset($invoice_list) ?
+                        $invoice_list
+                        :
+                        Model_ClientInvoice::getInstance()->getAllByClientId($client_id);?>
+  <?php if(!empty($invoice_list)) : ?>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Crt</th>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Reason</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php $i = 1;foreach($invoice_list as $entry) : ?>
+        <tr entry_id="<?php echo $entry_id; ?>">
+          <td><?php echo $i;?></td>
+          <td><?php echo $entry['id'];?></td>
+          <td><?php echo $entry['amount'];?></td>
+          <td><?php echo $entry['invoice_date'];?></td>
+          <td><?php echo $entry['reason'];?></td>
+          <td style="width:200px" class="operations">
+            <a href="editInvoice?entry_id=<?php echo $entry['id'];?>" class=" btn btn-primary edit">Edit &raquo;</a>
+
+            <a href="deleteInvoice?entry_id=<?php echo $entry['id'];?>"
+               class=" btn btn-danger modal_delete"
+               title="Delete Invoice"
+               question="Are you sure you want to delete this invoice ? "
+                >Delete &raquo;</a>
+          </td>
+        </tr>
+        <?php $i++;endforeach;?>
+      </tbody>
+    </table>
+  <?php else:?>
+      <div class="alert alert-info">
+        <p>There are no invoices for this user</p>
+      </div>
+  <?php endif;?>
+
+<?php else:?>
+  <div class="alert alert-error">
+    <p>Invalid Request, Client ID is required or invoice_list</p>
+  </div>
+<?php endif;?>

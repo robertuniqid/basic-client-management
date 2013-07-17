@@ -1,0 +1,119 @@
+<a class="btn btn-primary" href="add">Add New  &raquo;</a>
+
+<div style="clear:both"><br/></div>
+
+<?php if(!empty($entries)) : ?>
+  <table id="entries-display" class="table table-striped">
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+            <th>Total Invoiced</th>
+            <th>
+              <a class="btn btn-primary extract-buttons">Show All Buttons &raquo;</a>
+              <a class="btn btn-inverse compact-buttons" style="display: none">Compact Buttons  &raquo;</a>
+            </th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php $i = 1;foreach($entries as $entry_id => $entry) : ?>
+          <tr entry_id="<?php echo $entry_id; ?>"
+              class="<?php echo Model_Constant::getInstance()->client_flags_class[$entry['flag']];?>">
+            <td><?php echo $entry['first_name'];?></td>
+            <td><?php echo $entry['last_name'];?></td>
+            <td><?php echo $entry['email_address'];?></td>
+            <td><?php echo $entry['phone_number'];?></td>
+            <td><?php echo $entry['invoice_total'];?></td>
+            <td style="width:250px" class="operations">
+                <div class="btn-group left">
+                  <button tabindex="-1" class="btn btn-inverse">Flag</button>
+                  <button tabindex="-1" data-toggle="dropdown" class="btn btn-inverse dropdown-toggle">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <?php foreach(Model_Constant::getInstance()->client_flags as $flag_id => $flag_name) : ?>
+                      <li class="<?php echo $flag_id == $entry['flag'] ? 'active' : '';?>">
+                        <a href="flag?entry_id=<?php echo $entry_id?>&flag=<?php echo $flag_id;?>"
+                           class="flag"
+                           flag_id="<?php echo $flag_id;?>">
+                          <?php echo $flag_name;?> &raquo;
+                        </a>
+                      </li>
+                    <?php endforeach;?>
+                  </ul>
+                </div>
+
+
+                <div class="compacted-buttons left" style="display: block">
+                  <div class="btn-group">
+                    <button tabindex="-1" class="btn btn-primary">Operations</button>
+                    <button tabindex="-1" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="view?entry_id=<?php echo $entry_id;?>"
+                           class="view">
+                          <i class="icon-zoom-in"></i> View
+                        </a>
+                      </li>
+                      <li>
+                        <a href="edit?entry_id=<?php echo $entry_id;?>"
+                           class="edit">
+                          <i class="icon-pencil"></i>
+                          Edit
+                        </a>
+                      </li>
+                      <li>
+                        <a href="addInvoice?entry_id=<?php echo $entry_id;?>"
+                           class="invoice">
+                          <i>$</i> Invoice
+                        </a>
+                      </li>
+                      <li>
+                        <a href="delete?entry_id=<?php echo $entry_id;?>"
+                           class="modal_delete"
+                           title="Delete Email"
+                           question="Are you sure you want to delete <?php echo htmlentities($entry["first_name"] . ' ' . $entry["last_name"]);?> ? "
+                            ><i class="icon-trash"></i> Delete</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="extracted-buttons left" style="display: none">
+                  <a href="view?entry_id=<?php echo $entry_id;?>"
+                     class="btn view">
+                    View &raquo;
+                  </a>
+
+                  <a href="addInvoice?entry_id=<?php echo $entry_id;?>" class=" btn btn-primary invoice">Invoice &raquo;</a>
+
+                  <a href="edit?entry_id=<?php echo $entry_id;?>" class=" btn btn-primary edit">Edit &raquo;</a>
+
+                  <a href="delete?entry_id=<?php echo $entry_id;?>"
+                     class=" btn btn-danger modal_delete"
+                     title="Delete Client"
+                     question="Are you sure you want to delete <?php echo htmlentities($entry["first_name"] . ' ' . $entry["last_name"]);?> ? "
+                     >Delete &raquo;</a>
+                </div>
+
+                <div class="clear"></div>
+            </td>
+          </tr>
+        <?php $i++;endforeach;?>
+      </tbody>
+  </table>
+<?php else : ?>
+  <div class="alert alert-info">
+      No entries found, start by adding one
+  </div>
+<?php endif;?>
+
+<script type="text/javascript">
+
+
+
+</script>

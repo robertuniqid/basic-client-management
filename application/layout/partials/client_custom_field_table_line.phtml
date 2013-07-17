@@ -1,0 +1,13 @@
+<tr entry_id="<?php echo $custom_field['id'];?>">
+  <td field="name" class="field"><?php echo $custom_field['name'];?></td>
+  <td field="type" class="field" data-real-value="<?php echo $custom_field['type']?>">
+    <?php echo Model_Constant::getInstance()->client_custom_field_types[$custom_field['type']];?>
+  </td>
+  <td field="is_required" class="field" data-real-value="<?php echo $custom_field['is_required']?>">
+    <?php echo $custom_field['is_required'] == 1 ? 'Yes' : 'No';?>
+  </td>
+  <td>
+    <button class="btn btn-primary edit">Edit</button>
+    <button class="btn btn-danger delete">Delete</button>
+  </td>
+</tr>

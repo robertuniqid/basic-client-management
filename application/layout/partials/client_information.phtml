@@ -1,0 +1,27 @@
+<div class="left" style="width:500px;">
+  <h2>Client Information</h2>
+  <p><i class="icon-user"></i> First Name : <?php echo isset($info['first_name']) ? $info['first_name'] : '-'?></p>
+  <p><i class="icon-user"></i> Last Name : <?php echo isset($info['last_name']) ? $info['last_name'] : '-'?></p>
+  <p><i class="icon-briefcase"></i> Company : <?php echo isset($info['company']) ? $info['company'] : '-'?></p>
+  <p><i class="icon-envelope"></i> Email Address : <?php echo isset($info['email_address']) ? $info['email_address'] : '-'?></p>
+  <p><i class="icon-book"></i> Phone Number : <?php echo isset($info['phone_number']) ? $info['phone_number'] : '-'?></p>
+  <p>
+    <i class="icon-flag"></i> Flag :
+    <?php echo Model_Constant::getInstance()->client_flags[(isset($info['flag']) ? $info['flag'] : '0')];?>
+  </p>
+  <h2>Custom Client Information</h2>
+  <?php foreach(Model_CustomFields::getInstance()->getAll() as $custom_field) : ?>
+    <p>
+      <i class="icon-list"></i>
+      <?php echo $custom_field['name'];?> : <?php echo isset($info[$custom_field['name']]) ? $info[$custom_field['name']] : '-'?>
+    </p>
+  <?php endforeach;?>
+</div>
+<div class="left">
+  <h2>Notes</h2>
+  <div>
+    <?php echo isset($info['note']) ? $info['note'] : '-'?>
+  </div>
+</div>
+<div class="clear"></div>
+<?php echo Application_View::getInstance()->partial('client_invoice_list_information.phtml', array('client_id'  =>  $info['id']))?>

@@ -1,0 +1,104 @@
+<?php $client_list = isset($client_list) ? $client_list : Model_Client::getInstance()->getAll(); ?>
+
+<?php if(empty($client_list)) : ?>
+
+  <div class="alert alert-error">
+    <p>You need to add clients first before creating invoices.</p>
+    <p><a href="add">Add Client</a></p>
+  </div>
+
+<?php else : ?>
+  <form method="POST" action="<?php echo isset($postUrl) ? $postUrl : '';?>">
+    <?php if(isset($info['id'])) : ?>
+      <input type="hidden" name="info[id]" value="<?php echo $info['id']?>"/>
+    <?php endif; ?>
+
+    <div class="control-group">
+      <label class="control-label" for="client_id">Client Name</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-user"></i></span>
+          <select id="client_id" name="info[client_id]" class="span5" style="height: 20px;">
+            <?php echo Model_Helper_HTML::generateSelectOptionsHTML(
+              Model_Operation_Array::composeKeyToValue(
+                $client_list, 'id', array('first_name' , ' ', 'last_name') ),
+                (isset($info['client_id']) ? $info['client_id'] : 0)
+              );
+            ?>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="amount">Amount</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-certificate"></i></span>
+          <input class="span5"
+                 id="amount"
+                 name="info[amount]"
+                 type="text"
+                 required="required"
+                 value="<?php echo isset($info['amount']) ? $info['amount'] : ''?>"
+              >
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="invoice_date">Invoice Date</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-calendar"></i></span>
+          <input class="span5"
+                 id="invoice_date"
+                 name="info[invoice_date]"
+                 type="text"
+                 required="required"
+                 value="<?php echo isset($info['invoice_date']) ? $info['invoice_date'] : ''?>"
+              >
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reason">Reason</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-random"></i></span>
+          <input class="span5"
+                 id="reason"
+                 name="info[reason]"
+                 type="text"
+                 value="<?php echo isset($info['reason']) ? $info['reason'] : ''?>"
+              >
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="note">Additional Notes</label>
+      <div class="controls span7" style="margin: 0">
+        <textarea class="span7"
+                  id="note"
+                  name="info[note]"
+            ><?php echo isset($info['note']) ? $info['note'] : ''?></textarea>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div style="margin: 0 0 0 500px;">
+      <a href="index" class="btn">Cancel</a>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+  <div class="clear"></div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#invoice_date').datepicker();
+      CKEDITOR.replace('note');
+    });
+  </script>
+<?php endif;?>
